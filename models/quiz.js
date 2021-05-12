@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         validate: {notEmpty: {msg: "Answer must not be empty"}}
     }
-  }, { sequelize }
+  }, { 
+      sequelize 
+    }
 );
+
 return Quiz;
 };
