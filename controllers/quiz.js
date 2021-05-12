@@ -2,6 +2,8 @@
 const Sequelize = require("sequelize");
 const {models} = require("../models");
 
+const paginate = require('../helpers/paginate').paginate;
+
 // Autoload el quiz asociado a :quizId
 exports.load = async (req, res, next, quizId) => {
 
@@ -22,7 +24,21 @@ exports.load = async (req, res, next, quizId) => {
 exports.index = async (req, res, next) => {
 
     try {
-        const quizzes = await models.Quiz.findAll();
+        const count = await models.Quiz.count();
+
+        // Pagination:
+
+        const items_per_page = 10;
+
+        const pageno = parseInt(req.query.pageno) || 1;
+
+        res.locals.paginate_control = paginate(count, items_per_page, pageno, req.url);
+        const findOptions = {
+            offset: items_per_page * (pageno - 1),
+            limit : items_per_page
+        };
+
+        const quizzes = await models.Quiz.findAll(findOptions);
         res.render('quizzes/index.ejs', {quizzes});
     } catch (error) {
         next(error);
