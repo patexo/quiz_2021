@@ -16,5 +16,8 @@ const sequelize = new Sequelize(url);
 // Quiz Model
 sequelize.import(path.join(__dirname, 'quiz'));
 
+// Session model
+sequelize.import(path.join(__dirname,'session'));
+
 
 module.exports = sequelize;
