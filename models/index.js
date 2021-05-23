@@ -16,6 +16,10 @@ const sequelize = new Sequelize(url);
 // Quiz Model
 sequelize.import(path.join(__dirname, 'quiz'));
 
+// Import the definition of the Users Table from user.js
+sequelize.import(path.join(__dirname,'user'));
+
+
 // Session model
 sequelize.import(path.join(__dirname,'session'));
 
