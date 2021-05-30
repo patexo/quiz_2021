@@ -62,7 +62,6 @@ router.delete('/login', sessionController.destroy)
 
 //-----------------------------------------------------------
 
-
 // History: Restoration routes.
 
 // Redirection to the saved restoration route.
@@ -87,9 +86,11 @@ router.get(
       '/',
       '/author',
       '/users',
+      '/users/:id(\\d+)/quizzes',
       '/quizzes'
     ],
     saveBack);
+
 
 //-----------------------------------------------------------
 
@@ -131,6 +132,7 @@ if (!!process.env.QUIZ_OPEN_REGISTER) {
       userController.create);
 }
 
+
 router.get('/users/:userId(\\d+)/edit',
     sessionController.loginRequired,
     userController.isLocalRequired,
@@ -146,7 +148,10 @@ router.delete('/users/:userId(\\d+)',
     sessionController.adminOrMyselfRequired,
     userController.destroy);
 
-
+router.get('/users/:userId(\\d+)/quizzes',
+    sessionController.loginRequired,
+    quizController.index);
+    
 // Routes for the resource /quizzes
 router.get('/quizzes',
     quizController.index);
